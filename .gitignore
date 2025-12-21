@@ -1,0 +1,4 @@
+.env
+revisia
+__pycache__/
+*.pyc
