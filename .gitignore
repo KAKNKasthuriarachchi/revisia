@@ -2,3 +2,6 @@
 revisia
 __pycache__/
 *.pyc
+
+vectorstore
+revisiatest02.ipynb

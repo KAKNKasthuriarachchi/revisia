@@ -1,15 +1,24 @@
-def generate_embeddings(text):
-    # Placeholder function for generating embeddings
-    # This function should use a library like Hugging Face Transformers to generate embeddings
-    pass
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from config import Config
 
-def load_model(model_name):
-    # Placeholder function for loading a pre-trained model for embeddings
-    # This function should load the specified model from Hugging Face or another source
-    pass
+_embedding_model = None
+
+def load_model():
+    """Load Google Generative AI embeddings model"""
+    global _embedding_model
+    if _embedding_model is None:
+        _embedding_model = GoogleGenerativeAIEmbeddings(
+            model=Config.EMBEDDING_MODEL,
+            google_api_key=Config.GOOGLE_API_KEY
+        )
+    return _embedding_model
 
 def get_embeddings(text):
-    # Generate embeddings for the provided text
-    model = load_model("model_name")  # Replace with actual model name
-    embeddings = generate_embeddings(text)
-    return embeddings
+    """Generate embeddings for the provided text"""
+    model = load_model()
+    return model.embed_query(text)
+
+def get_batch_embeddings(texts):
+    """Generate embeddings for multiple texts at once"""
+    model = load_model()
+    return model.embed_documents(texts)
