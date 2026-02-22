@@ -34,11 +34,7 @@ SECRET_KEY=your_secret_key_here
 # Google Gemini API
 GOOGLE_API_KEY=your_google_api_key
 
-# Vector Store Configuration (optional)
-DEFAULT_VECTOR_STORE=grade_10_11
-VECTOR_STORE_PATH=vectorstore/G10_G11_history_vector_store
-
-# Debug Mode
+Debug Mode
 DEBUG=True
 ```
 
@@ -177,7 +173,7 @@ VECTOR_STORES = {
 
 1. **Vector Store Loading**: The application loads a pre-built FAISS vector store based on user selection
 2. **User Query**: When a user asks a question:
-   - The question is embedded using Google's text-embedding-004 model
+   - The question is embedded using Google's gemini-embedding-001 model
    - Similar chunks are retrieved from the selected vector store
    - Context is extracted with page numbers and grades
    - Google Gemini generates a focused answer using the context
@@ -206,9 +202,6 @@ Ensure your vector store folder exists at the path specified in `Config.VECTOR_S
 
 ### API Key errors
 Make sure your `.env` file has a valid `GOOGLE_API_KEY`.
-
-### Loading errors
-Verify that your vector store was built with the same embedding model (text-embedding-004).
 
 ### Vector store selection not appearing
 Check that you have multiple vector stores configured in `src/config.py` and the folders exist.

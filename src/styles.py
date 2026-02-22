@@ -4,403 +4,206 @@ def load_styles():
     st.markdown(
         """
         <style>
-        /* Import Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        /* Global Styles */
-        * {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+        /* ── Global ── */
+        * { font-family: 'Inter', sans-serif; }
+
+        html, body, [data-testid="stAppViewContainer"] {
+            background-color: #0f0f0f;
+            color: #e4e4e7;
         }
-        
-        /* Remove default padding and make auth pages non-scrollable */
-        .main .block-container {
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-            max-width: 900px;
-        }
-        
-        /* Auth page specific - center content and prevent scrolling */
-        section[data-testid="stSidebar"] + div .block-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            min-height: 80vh;
-            overflow: hidden;
-        }
-        
-        /* Smooth fade-in animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Slide-in animation for sidebar items */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        /* Apply fade-in to main content */
+
+        /* ── Main content ── */
         .main {
-            animation: fadeIn 0.5s ease-out;
+            background-color: #0f0f0f;
+            height: 100vh;
+            overflow-y: auto;
         }
-        
-        /* Modern Button Styles */
-        .stButton > button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 0.65rem 1.5rem;
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
-            width: 100%;
-            cursor: pointer;
+
+        .main .block-container {
+            background-color: #0f0f0f;
+            max-width: 860px;
+            padding: 2rem 2rem 80px 2rem;
         }
-        
-        .stButton > button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-        }
-        
-        .stButton > button:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
-        }
-        
-        /* Secondary buttons (for chat list) */
-        button[kind="secondary"] {
-            background: #ffffff !important;
-            color: #4a5568 !important;
-            border: 1px solid #e2e8f0 !important;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
-        }
-        
-        button[kind="secondary"]:hover {
-            background: #f7fafc !important;
-            border-color: #cbd5e0 !important;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
-        }
-        
-        /* Primary buttons (active chat) */
-        button[kind="primary"] {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-            color: white !important;
+
+        /* ── Headings ── */
+        h1, h2, h3, p, span, label, div { color: #e4e4e7 !important; }
+        h1 { font-size: 1.4rem !important; font-weight: 600; margin-bottom: 1.5rem; }
+
+        /* ── Chat messages ── */
+        .stChatMessage {
+            background: transparent !important;
             border: none !important;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.25) !important;
+            padding: 0.25rem 0;
+            margin: 0.1rem 0;
         }
-        
-        button[kind="primary"]:hover {
-            background: linear-gradient(135deg, #5568d3 0%, #653a8b 100%) !important;
-            box-shadow: 0 3px 12px rgba(102, 126, 234, 0.35) !important;
-        }
-        
-        /* Input Fields */
-        .stTextInput > div > div > input,
-        .stTextArea > div > div > textarea {
-            border: 2px solid #e2e8f0;
+
+        [data-testid="stChatMessageContent"] {
+            background: #1c1c1e !important;
             border-radius: 12px;
-            padding: 0.75rem 1rem;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            background-color: #ffffff;
-            color: #1a202c !important;
+            padding: 0.65rem 1rem;
+            color: #e4e4e7 !important;
+            border: 1px solid #27272a;
         }
-        
-        .stTextInput > div > div > input::placeholder,
-        .stTextArea > div > div > textarea::placeholder {
-            color: #a0aec0 !important;
+
+        [data-testid="stChatMessageContent"] p { color: #e4e4e7 !important; }
+
+        [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) [data-testid="stChatMessageContent"] {
+            background: #27272a !important;
         }
-        
-        .stTextInput > div > div > input:focus,
-        .stTextArea > div > div > textarea:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-            outline: none;
+
+        /* ── Chat input - fixed at bottom ── */
+        .stChatFloatingInputContainer {
+            position: fixed !important;
+            bottom: 0 !important;
+            left: var(--sidebar-width, 240px) !important;
+            right: 0 !important;
+            background: #0f0f0f !important;
+            border-top: 1px solid #27272a !important;
+            padding: 0.5rem 2rem !important;
+            z-index: 999 !important;
         }
-        
-        /* Input Labels */
-        .stTextInput label,
-        .stTextArea label {
-            color: #4a5568 !important;
-            font-weight: 500;
+
+        .stChatInput textarea {
+            background: #1c1c1e !important;
+            border: 1px solid #3f3f46 !important;
+            border-radius: 8px !important;
+            color: #e4e4e7 !important;
+            padding: 0.45rem 0.85rem !important;
+            font-size: 13px !important;
+            min-height: 38px !important;
+            max-height: 38px !important;
+            resize: none !important;
+            line-height: 1.4 !important;
+            overflow: hidden !important;
         }
-        
-        /* Chat Input */
-        .stChatInput > div > div > textarea {
-            border: 2px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 1rem 1.25rem;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            background-color: #ffffff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            color: #1a202c !important;
+
+        .stChatInput textarea::placeholder { color: #71717a !important; }
+        .stChatInput textarea:focus {
+            border-color: #71717a !important;
+            outline: none !important;
+            max-height: 100px !important;
+            overflow-y: auto !important;
         }
-        
-        .stChatInput > div > div > textarea::placeholder {
-            color: #a0aec0 !important;
+
+        .stChatInput button {
+            background: #3f3f46 !important;
+            border: none !important;
+            border-radius: 6px !important;
+            color: #e4e4e7 !important;
+            padding: 0.3rem 0.6rem !important;
+            height: 32px !important;
         }
-        
-        .stChatInput > div > div > textarea:focus {
-            border-color: #667eea;
-            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.15);
-        }
-        
-        /* Sidebar Styling - More Compact */
+
+        .stChatInput button:hover { background: #52525b !important; }
+
+        /* ── Sidebar ── */
         section[data-testid="stSidebar"] {
-            background-color: #f8f9fa;
-            border-right: 1px solid #e2e8f0;
-            padding: 0.5rem 0.75rem !important;
+            background-color: #111111 !important;
+            border-right: 1px solid #27272a;
         }
-        
+
         section[data-testid="stSidebar"] > div {
-            animation: slideIn 0.4s ease-out;
-            padding-top: 1rem;
+            overflow-y: auto;
+            max-height: 100vh;
+            padding: 1rem 0.75rem;
         }
-        
-        /* Compact sidebar content */
-        section[data-testid="stSidebar"] .block-container {
-            padding: 0.5rem 0 !important;
-        }
-        
-        /* Sidebar Title - More Compact */
-        section[data-testid="stSidebar"] h1 {
-            font-size: 1.3rem !important;
-            margin-bottom: 0.5rem !important;
-            padding: 0.5rem 0 !important;
-        }
-        
-        /* Sidebar Subheader - More Compact */
-        section[data-testid="stSidebar"] h2,
-        section[data-testid="stSidebar"] h3 {
-            font-size: 0.95rem !important;
-            margin: 0.5rem 0 0.3rem 0 !important;
-            padding: 0 !important;
-        }
-        
-        /* Sidebar Text Color Fix */
-        section[data-testid="stSidebar"] * {
-            color: #1a202c !important;
-        }
-        
+
         section[data-testid="stSidebar"] h1,
         section[data-testid="stSidebar"] h2,
-        section[data-testid="stSidebar"] h3,
-        section[data-testid="stSidebar"] h4,
-        section[data-testid="stSidebar"] h5,
-        section[data-testid="stSidebar"] h6 {
-            color: #1a202c !important;
+        section[data-testid="stSidebar"] h3 {
+            color: #e4e4e7 !important;
+            font-size: 0.8rem !important;
+            font-weight: 600 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
-        
+
         section[data-testid="stSidebar"] p,
         section[data-testid="stSidebar"] span,
-        section[data-testid="stSidebar"] label {
-            color: #4a5568 !important;
-        }
-        
-        /* Sidebar button text color override for primary buttons */
-        section[data-testid="stSidebar"] button[kind="primary"] p,
-        section[data-testid="stSidebar"] button[kind="primary"] span {
-            color: white !important;
-        }
-        
-        /* Sidebar Buttons - More Compact */
-        section[data-testid="stSidebar"] .stButton > button {
-            border-radius: 8px;
-            font-size: 13px;
-            padding: 0.5rem 0.75rem;
-            margin: 0.2rem 0;
-            transition: all 0.2s ease;
-        }
-        
-        /* New Chat Button */
-        section[data-testid="stSidebar"] .stButton:first-of-type > button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-weight: 600;
-            color: white !important;
-            margin-bottom: 0.5rem;
-        }
-        
-        /* Delete Button - More Compact */
-        button:has(span:contains("🗑️")) {
-            background: transparent !important;
-            color: #e53e3e !important;
-            border: 1px solid transparent !important;
-            box-shadow: none !important;
-            padding: 0.3rem 0.5rem !important;
-            font-size: 14px !important;
-            transition: all 0.2s ease !important;
-            min-width: 32px !important;
-        }
-        
-        button:has(span:contains("🗑️")):hover {
-            background: #fff5f5 !important;
-            border-color: #fc8181 !important;
-        }
-        
-        /* Selectbox - More Compact */
-        section[data-testid="stSidebar"] .stSelectbox {
-            margin: 0.3rem 0 0.5rem 0;
-        }
-        
-        .stSelectbox > div > div {
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            background-color: #ffffff;
-            font-size: 13px;
-        }
-        
-        .stSelectbox > div > div:hover {
-            border-color: #cbd5e0;
-        }
-        
-        /* Selectbox text color */
-        .stSelectbox label {
-            color: #4a5568 !important;
-            font-size: 13px !important;
-            margin-bottom: 0.25rem !important;
-        }
-        
-        .stSelectbox div[data-baseweb="select"] > div {
-            color: #1a202c !important;
-        }
-        
-        /* Divider - More Compact */
+        section[data-testid="stSidebar"] label { color: #a1a1aa !important; }
+
         section[data-testid="stSidebar"] hr {
-            margin: 0.5rem 0 !important;
+            border-color: #27272a !important;
+            margin: 0.75rem 0 !important;
         }
-        
-        /* Tab styling */
-        .stTabs [data-baseweb="tab-list"] {
-            gap: 8px;
+
+        /* ── Sidebar toggle button ── */
+        [data-testid="collapsedControl"],
+        button[kind="header"] {
+            background: #1c1c1e !important;
+            border: 1px solid #3f3f46 !important;
+            border-radius: 6px !important;
+            color: #e4e4e7 !important;
         }
-        
-        .stTabs [data-baseweb="tab"] {
-            color: #4a5568 !important;
-            font-weight: 500;
+
+        /* ── Buttons ── */
+        .stButton > button {
+            background: #1c1c1e;
+            color: #e4e4e7;
+            border: 1px solid #3f3f46;
+            border-radius: 8px;
+            font-size: 10px;
+            padding: 0.25rem 0.25rem;
+            width: 100%;
+            transition: all 0.15s ease;
         }
-        
-        .stTabs [aria-selected="true"] {
-            color: #667eea !important;
+
+        .stButton > button:hover { background: #27272a; border-color: #52525b; }
+
+        button[kind="primary"] {
+            background: #3f3f46 !important;
+            color: #fff !important;
+            border-color: #52525b !important;
         }
-        
-        /* Chat Messages - Fix Text Color */
-        .stChatMessage {
-            animation: fadeIn 0.4s ease-out;
-            border-radius: 12px;
-            padding: 1rem;
-            margin: 0.75rem 0;
-            background-color: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+        button[kind="secondary"] {
+            background: transparent !important;
+            color: #a1a1aa !important;
+            border-color: #27272a !important;
         }
-        
-        /* Chat Message Text Color Fix */
-        .stChatMessage p,
-        .stChatMessage span,
-        .stChatMessage div {
-            color: #1a202c !important;
+
+        /* ── Inputs ── */
+        .stTextInput > div > div > input,
+        .stTextArea > div > div > textarea {
+            background: #1c1c1e !important;
+            border: 1px solid #3f3f46 !important;
+            border-radius: 8px !important;
+            color: #e4e4e7 !important;
+            padding: 0.65rem 1rem !important;
         }
-        
-        /* Assistant message styling */
-        [data-testid="stChatMessageContent"] {
-            color: #1a202c !important;
+
+        .stTextInput label, .stTextArea label { color: #a1a1aa !important; font-size: 13px !important; }
+
+        /* ── Selectbox ── */
+        .stSelectbox > div > div {
+            background: #1c1c1e !important;
+            border: 1px solid #3f3f46 !important;
+            border-radius: 8px !important;
+            color: #e4e4e7 !important;
         }
-        
-        /* Streaming cursor fix */
-        .stChatMessage span {
-            color: #1a202c !important;
-        }
-        
-        /* Title Styling */
-        h1 {
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 1.5rem;
-            animation: fadeIn 0.6s ease-out;
-        }
-        
-        /* Divider */
-        hr {
-            border: none;
-            border-top: 1px solid #e2e8f0;
-            margin: 1rem 0;
-        }
-        
-        /* Success/Error Messages */
+
+        .stSelectbox label { color: #a1a1aa !important; font-size: 13px !important; }
+
+        /* ── Tabs ── */
+        .stTabs [data-baseweb="tab-list"] { border-bottom: 1px solid #27272a; gap: 8px; }
+        .stTabs [data-baseweb="tab"] { color: #71717a !important; }
+        .stTabs [aria-selected="true"] { color: #e4e4e7 !important; border-bottom: 2px solid #e4e4e7; }
+
+        /* ── Alerts ── */
         .stSuccess, .stError, .stWarning, .stInfo {
-            border-radius: 10px;
-            padding: 1rem;
-            animation: fadeIn 0.4s ease-out;
+            border-radius: 8px;
+            border: 1px solid #27272a;
+            background: #1c1c1e !important;
         }
-        
-        /* Loading Spinner */
-        .stSpinner > div {
-            border-color: #667eea;
-        }
-        
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e0;
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a0aec0;
-        }
-        
-        /* Remove extra spacing on auth pages */
-        .main.css-uf99v8.e1g8pov65 {
-            padding: 1rem;
-        }
-        
-        /* Smooth transitions for all interactive elements */
-        button, input, textarea, select {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        /* Hide Streamlit branding */
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .main .block-container {
-                padding: 1rem;
-            }
-            
-            .stButton > button {
-                padding: 0.6rem 1.2rem;
-                font-size: 14px;
-            }
-        }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: #52525b; }
+        * { scrollbar-width: thin; scrollbar-color: #3f3f46 transparent; }
         </style>
         """,
         unsafe_allow_html=True

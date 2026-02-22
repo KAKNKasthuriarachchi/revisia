@@ -2,6 +2,7 @@
 revisia
 __pycache__/
 *.pyc
-
+venv
 vectorstore
 revisiatest02.ipynb
+run.ps1

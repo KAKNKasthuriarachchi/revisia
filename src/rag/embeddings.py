@@ -17,8 +17,3 @@ def get_embeddings(text):
     """Generate embeddings for the provided text"""
     model = load_model()
     return model.embed_query(text)
-
-def get_batch_embeddings(texts):
-    """Generate embeddings for multiple texts at once"""
-    model = load_model()
-    return model.embed_documents(texts)

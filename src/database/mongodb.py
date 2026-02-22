@@ -3,15 +3,15 @@ import os
 from dotenv import load_dotenv
 from pymongo.server_api import ServerApi
 from bson import ObjectId
-from datetime import datetime
+from datetime import datetime, timezone
 
 load_dotenv()
 
 class MongoDB:
     def __init__(self):
         # Use consistent environment variable names
-        mongodb_uri = os.getenv("MONGODB_URI") or os.getenv("DATABASE_URL")
-        db_name = os.getenv("DATABASE_NAME") or os.getenv("DB_NAME")
+        mongodb_uri = os.getenv("DATABASE_URL")
+        db_name = os.getenv("DB_NAME")
         
         print(f"Connecting to MongoDB: {db_name}")
         self.client = MongoClient(mongodb_uri, server_api=ServerApi('1'))
@@ -39,8 +39,8 @@ class MongoDB:
         chat = {
             "user_id": user_id,
             "title": title,
-            "created_at": datetime.utcnow(),
-            "updated_at": datetime.utcnow()
+            "created_at": datetime.now(timezone.utc),
+            "updated_at": datetime.now(timezone.utc)
         }
         result = self.get_chats_collection().insert_one(chat)
         return str(result.inserted_id)

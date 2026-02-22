@@ -9,9 +9,7 @@ def load_vector_store(vector_store_key: str = None):
     Load an existing FAISS vector store
     
     Args:
-        vector_store_key: Key from Config.VECTOR_STORES (e.g., 'grade_10_11', 'sinhala_medium')
-                         If None, uses the default vector store from config
-    
+        vector_store_key: Key from Config.VECTOR_STORES dict to specify which vector store to load    
     Returns:
         FAISS vectorstore object
     """

@@ -8,7 +8,8 @@ from styles import load_styles
 # -------------------------------
 st.set_page_config(
     page_title="Revisia",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 # -------------------------------
