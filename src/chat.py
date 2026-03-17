@@ -49,8 +49,9 @@ def generate_chat_title(message: str) -> str:
 def init_session_state():
     user_id = st.session_state.get("user_id")
     if not user_id:
+        st.session_state.authenticated = False
         st.error("Please log in to use the chat feature.")
-        return
+        return False
 
     if "chats" not in st.session_state or not isinstance(st.session_state.chats, dict):
         st.session_state.chats = {}
@@ -80,6 +81,8 @@ def init_session_state():
             st.session_state.active_chat = list(st.session_state.chats.keys())[0]
         else:
             _create_new_chat(user_id)
+
+    return True
 
 def _create_new_chat(user_id: str) -> str:
     chat_id = db.create_chat(user_id, "New Chat")
@@ -190,7 +193,9 @@ def _get_username() -> str:
 # Main chat UI
 # -------------------------------
 def chat_ui():
-    init_session_state()
+    if not init_session_state():
+        return
+
     sidebar_ui()
 
     active_chat_id = st.session_state.active_chat
