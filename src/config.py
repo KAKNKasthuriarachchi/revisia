@@ -90,7 +90,7 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY")
     
     EMBEDDING_MODEL = "models/gemini-embedding-001"
-    LLM_MODEL ="models/gemini-2.0-flash-lite"
+    LLM_MODEL ="models/gemini-2.5-flash-lite"
     VECTOR_STORES = {
         f"{Grade.O_LEVEL.key}_{Language.ENGLISH.key}": {
             "path": "vectorstore/OL_E_history_vector_store",
@@ -107,7 +107,12 @@ class Config:
             "path": "vectorstore/OL_T_history_vector_store",
             "description": "Grade 10 and 11 History (Tamil Medium)",
             "grades": [10, 11]
-        },  
+        }, 
+         f"{Grade.GRADE_6.key}_{Language.ENGLISH.key}": {
+            "path": "vectorstore/G06_E_history_vector_store",
+            "description": "Grade 6 History (English Medium)",
+            "grades": [6]
+        },   
     }
     DEFAULT_VECTOR_STORE = VECTOR_STORES.get('grade_OL_E')
     
