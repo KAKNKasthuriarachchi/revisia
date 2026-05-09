@@ -112,7 +112,44 @@ class Config:
             "path": "vectorstore/G06_E_history_vector_store",
             "description": "Grade 6 History (English Medium)",
             "grades": [6]
+            
+        },
+        f"{Grade.GRADE_6.key}_{Language.SINHALA.key}": {
+            "path": "vectorstore/G06_S_history_vector_store",
+            "description": "Grade 6 History (Sinhala Medium)",
+            "grades": [6]
+            
+        }, 
+         f"{Grade.GRADE_7.key}_{Language.ENGLISH.key}": {
+            "path": "vectorstore/G07_E_history_vector_store",
+            "description": "Grade 7 History (English Medium)",
+            "grades": [7]
+            
         },   
+         f"{Grade.GRADE_7.key}_{Language.SINHALA.key}": {
+            "path": "vectorstore/G07_S_history_vector_store",
+            "description": "Grade 7 History (Sinhala Medium)",
+            "grades": [7]
+            
+        }, 
+          f"{Grade.GRADE_8.key}_{Language.ENGLISH.key}": {
+            "path": "vectorstore/G08_E_history_vector_store",
+            "description": "Grade 8 History (English Medium)",
+            "grades": [8]
+            
+        },
+          f"{Grade.GRADE_8.key}_{Language.SINHALA.key}": {
+            "path": "vectorstore/G08_S_history_vector_store",
+            "description": "Grade 8 History (Sinhala Medium)",
+            "grades": [8]
+            
+        },
+            f"{Grade.GRADE_9.key}_{Language.ENGLISH.key}": {
+            "path": "vectorstore/G09_E_history_vector_store",
+            "description": "Grade 9 History (English Medium)",
+            "grades": [9]
+            
+        },
     }
     DEFAULT_VECTOR_STORE = VECTOR_STORES.get('grade_OL_E')
     

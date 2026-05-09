@@ -16,8 +16,11 @@ db = MongoDB()
 # Grade / Language mappings
 # -------------------------------
 GRADE_MAP = {
-    "6": Grade.GRADE_6, "7": Grade.GRADE_7, "8": Grade.GRADE_8,
-    "9": Grade.GRADE_9, "O/L": Grade.O_LEVEL,
+    "6": Grade.GRADE_6, 
+    "7": Grade.GRADE_7, 
+    "8": Grade.GRADE_8,
+    "9": Grade.GRADE_9, 
+    "O/L": Grade.O_LEVEL,
 }
 LANGUAGE_MAP = {
     "English": Language.ENGLISH,
