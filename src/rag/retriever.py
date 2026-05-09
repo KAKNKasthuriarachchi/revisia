@@ -106,7 +106,6 @@ def generate_response(
         
         # Generate answer using Gemini
         answer = chat_gemini(question, context=context, template_name=template_name)
-        
         return answer
     except FileNotFoundError as e:
         return f"{str(e)}\n\n{FallbackResponse.VECTOR_STORE_NOT_FOUND.value}"
