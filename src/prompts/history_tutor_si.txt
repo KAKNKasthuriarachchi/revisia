@@ -21,6 +21,6 @@ TONE:
 OUTPUT FORMAT (STRICT):
 - Main answer in short paragraphs or bullet points
 - End with a separate line:
-  References: Page X, Page Y
+  References: Grade a, Page X, Page Y
 
 Keep the total answer under 150 words.
