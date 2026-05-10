@@ -103,35 +103,45 @@ def _create_new_chat(user_id: str) -> str:
 # -------------------------------
 def sidebar_ui():
     with st.sidebar:
-        st.title("💬 Chats")
-        st.divider()
+        st.markdown("<div class_id='sidebar-header'>", unsafe_allow_html=True)
 
         # Study settings
         st.subheader("📚 Study Settings")
-        st.caption(f"Grade: {st.session_state.selected_grade}")
+        grade_col, language_col = st.columns(2)
+        grade_options = list(GRADE_MAP.keys())
+        with grade_col:
+            selected_grade = st.selectbox(
+                "Grade",
+                grade_options,
+                index=grade_options.index(st.session_state.selected_grade),
+                key="grade_selector"
+            )
         language_options = list(LANGUAGE_MAP.keys())
-        selected_language = st.selectbox(
-            "Language",
-            language_options,
-            index=language_options.index(st.session_state.selected_language),
-            key="language_selector"
-        )
-        if selected_language != st.session_state.selected_language:
+        with language_col:
+            selected_language = st.selectbox(
+                "Language",
+                language_options,
+                index=language_options.index(st.session_state.selected_language),
+                key="language_selector"
+            )
+
+        if selected_grade != st.session_state.selected_grade or selected_language != st.session_state.selected_language:
+            st.session_state.selected_grade = selected_grade
             st.session_state.selected_language = selected_language
-            st.success(f"Language {selected_language}")
+            st.success(f"Grade {selected_grade} · {selected_language}")
+        # Scrollable top section
+        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("<div class='sidebar-content'>", unsafe_allow_html=True)
+        
+        st.title("💬 Chats")
 
-        st.divider()
-
-        # New chat
         if st.button("➕ New Chat", use_container_width=True):
             _create_new_chat(st.session_state.get("user_id"))
             st.rerun()
 
-        st.divider()
-
-        # Chat list
         for chat_id, chat_info in list(st.session_state.chats.items()):
-            col1, col2 = st.columns([4, 1])
+            col1, col2 = st.columns([0.8, 0.2])
+
             with col1:
                 if st.button(
                     chat_info["title"],
@@ -141,26 +151,28 @@ def sidebar_ui():
                 ):
                     st.session_state.active_chat = chat_id
                     st.rerun()
+
             with col2:
-                if st.button("🗑️", key=f"delete_{chat_id}"):
-                    db.delete_chat(chat_id)
-                    del st.session_state.chats[chat_id]
-                    del st.session_state.chat_messages[chat_id]
-                    if st.session_state.chats:
-                        st.session_state.active_chat = list(st.session_state.chats.keys())[0]
-                    else:
-                        _create_new_chat(st.session_state.get("user_id"))
-                    st.rerun()
+                with st.popover(""):
+                    if st.button("Delete chat", key=f"delete_{chat_id}"):
+                        db.delete_chat(chat_id)
+                        del st.session_state.chats[chat_id]
+                        del st.session_state.chat_messages[chat_id]
+                        if st.session_state.chats:
+                            st.session_state.active_chat = list(st.session_state.chats.keys())[0]
+                        else:
+                            _create_new_chat(st.session_state.get("user_id"))
+                        st.rerun()
+
+        st.markdown("</div>", unsafe_allow_html=True)
 
         # Sticky profile bar at bottom
         st.markdown("<div class='sidebar-profile'>", unsafe_allow_html=True)
-
         display_name = _get_display_name()
         with st.popover(f"👤 {display_name}", use_container_width=True):
             st.caption(f"Signed in as **{display_name}**")
             if st.button("🚪 Log out", use_container_width=True, type="secondary", key="logout_btn"):
                 logout()
-
         st.markdown("</div>", unsafe_allow_html=True)
 
 def _get_display_name() -> str:
@@ -174,10 +186,7 @@ def _get_display_name() -> str:
                 full_name = " ".join(part for part in [first_name, last_name] if part)
                 if full_name:
                     return full_name
-                email = (user.get("email") or "").strip()
-                if "@" in email:
-                    return email.split("@", 1)[0] or "User"
-                return email or "User"
+                return "User"  
         except Exception:
             pass
     return "User"

@@ -17,17 +17,26 @@ def load_styles():
         .auth-spacer-md { height: 0.75rem; }
         .auth-spacer-lg { height: 1rem; }
 
-        /* Sidebar profile bar */
-        .sidebar-profile {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 18rem;
-            background-color: #ffffff;
-            border-top: 1px solid #e5e7eb;
-            padding: 0.3rem 0.75rem;
-            z-index: 999;
+
+        /* Hide the default empty Streamlit sidebar header */
+        [data-testid="stSidebarHeader"] {
+            display: none;
         }
+
+        .sidebar-content {
+            display: flex;
+            align-items: top;
+            gap: 0.5rem;
+            
+        }
+        .sidebar-profile{
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            bottom: 0;
+            width: 100%;
+        }
+        
         </style>
         """,
         unsafe_allow_html=True
