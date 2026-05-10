@@ -144,7 +144,7 @@ def sidebar_ui():
 
             with col1:
                 if st.button(
-                    chat_info["title"],
+                    (chat_info["title"][:20].strip() + "...") if len(chat_info["title"]) > 20 else chat_info["title"],
                     key=f"chat_{chat_id}",
                     use_container_width=True,
                     type="primary" if chat_id == st.session_state.active_chat else "secondary"
