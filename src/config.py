@@ -91,6 +91,7 @@ class Config:
     
     EMBEDDING_MODEL = "models/gemini-embedding-001"
     LLM_MODEL ="models/gemini-2.5-flash-lite"
+    QUERY_REWRITE_MODEL = "models/gemini-2.0-flash-lite"
     VECTOR_STORES = {
         f"{Grade.O_LEVEL.key}_{Language.ENGLISH.key}": {
             "path": "vectorstore/OL_E_history_vector_store",

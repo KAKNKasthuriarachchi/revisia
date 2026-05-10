@@ -237,7 +237,7 @@ def chat_ui():
         with st.chat_message("assistant"):
             placeholder = st.empty()
             response_text = ""
-            full_response = generate_response(user_input, grade=get_grade_enum(), language=get_language_enum())
+            full_response = generate_response(user_input, grade=get_grade_enum(), chat_history=chat_history[1:], language=get_language_enum())
             for token in full_response.split():
                 response_text += token + " "
                 placeholder.markdown(response_text + "▌")
