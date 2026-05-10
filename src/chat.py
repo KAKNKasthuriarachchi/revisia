@@ -2,10 +2,11 @@ import streamlit as st
 import streamlit.components.v1 as components
 from database.mongodb import MongoDB
 from rag.retriever import generate_response
-from config import FallbackResponse, Grade, Language
+from config import Grade, Language
 from auth import logout
 from bson import ObjectId
 import time
+from datetime import datetime
 
 # -------------------------------
 # MongoDB connection
@@ -69,6 +70,8 @@ def init_session_state():
 
     if not st.session_state.get("chats_loaded"):
         user_chats = db.get_user_chats(user_id)
+        user_chats = sorted(user_chats, key=lambda x: x.get("created_at") or datetime.min, reverse=True)
+
         if user_chats:
             for chat in user_chats:
                 chat_id = str(chat["_id"])
@@ -92,7 +95,7 @@ def init_session_state():
 def _create_new_chat(user_id: str) -> str:
     chat_id = db.create_chat(user_id, "New Chat")
     welcome = get_welcome_message()
-    st.session_state.chats[chat_id] = {"title": "New Chat", "created_at": None}
+    st.session_state.chats[chat_id] = {"title": "New Chat", "created_at": datetime.utcnow()} 
     st.session_state.chat_messages[chat_id] = [{"role": "assistant", "message": welcome}]
     db.add_message(chat_id, "assistant", welcome)
     st.session_state.active_chat = chat_id
@@ -138,8 +141,14 @@ def sidebar_ui():
         if st.button("➕ New Chat", use_container_width=True):
             _create_new_chat(st.session_state.get("user_id"))
             st.rerun()
+        sorted_chats = sorted(
+            st.session_state.chats.items(),
+            key=lambda x: x[1].get("created_at") or datetime.min,
+            reverse=True
+        )
 
-        for chat_id, chat_info in list(st.session_state.chats.items()):
+
+        for chat_id, chat_info in list(sorted_chats):
             col1, col2 = st.columns([0.8, 0.2])
 
             with col1:
