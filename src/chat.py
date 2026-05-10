@@ -158,20 +158,7 @@ def sidebar_ui():
                     st.rerun()
 
         # Sticky profile bar at bottom
-        st.markdown("""
-            <style>
-                section[data-testid="stSidebar"] > div { padding-bottom: 1rem !important; }
-                .profile-wrap {
-                    position: fixed; bottom: 0; left: 0;
-                    width: 18rem;
-                    background-color: #0e1117;
-                    border-top: 1px solid #27272a;
-                    padding: 0.3rem 0.75rem;
-                    z-index: 999;
-                }
-            </style>
-            <div class="profile-wrap">
-        """, unsafe_allow_html=True)
+        st.markdown("<div class='sidebar-profile'>", unsafe_allow_html=True)
 
         username = _get_username()
         with st.popover(f"👤 {username}", use_container_width=True):

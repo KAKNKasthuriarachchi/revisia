@@ -66,9 +66,9 @@ def auth_ui():
 
     with col2:
         st.markdown("""
-            <div style='text-align: center; margin-bottom: 2.5rem; margin-top: -2rem;'>
-                <h1 style='font-size: 2.5rem; font-weight: 600; margin-bottom: 0.5rem; color: #FFFFFF;'>Revisia</h1>
-                <p style='color: #71717a; font-size: 0.95rem;'>Your AI-powered history tutor</p>
+            <div class='auth-hero'>
+                <h1 class='auth-hero-title'>Revisia</h1>
+                <p class='auth-hero-subtitle'>Your AI-powered history tutor</p>
             </div>
         """, unsafe_allow_html=True)
 
@@ -87,17 +87,17 @@ def auth_ui():
                 st.session_state.auth_mode = "register"
                 st.rerun()
 
-        st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
+        st.markdown("<div class='auth-spacer-lg'></div>", unsafe_allow_html=True)
 
         # Login Form
         if st.session_state.auth_mode == "login":
             st.markdown("<p style='font-size: 0.875rem; color: #71717a; margin-bottom: 0.75rem;'>Welcome back! Please sign in to continue.</p>", unsafe_allow_html=True)
 
             username = st.text_input("Username", key="login_username", placeholder="Enter your username or email", label_visibility="collapsed")
-            st.markdown("<div style='height: 0.4rem;'></div>", unsafe_allow_html=True)
+            st.markdown("<div class='auth-spacer-sm'></div>", unsafe_allow_html=True)
 
             password = st.text_input("Password", type="password", key="login_password", placeholder="Enter your password", label_visibility="collapsed")
-            st.markdown("<div style='height: 0.75rem;'></div>", unsafe_allow_html=True)
+            st.markdown("<div class='auth-spacer-md'></div>", unsafe_allow_html=True)
 
             if st.button("Sign In", key="login_btn", use_container_width=True, type="primary"):
                 login_identifier = username.strip()
@@ -142,16 +142,16 @@ def auth_ui():
             st.markdown("<p style='font-size: 0.875rem; color: #71717a; margin-bottom: 0.75rem;'>Create a new account to get started.</p>", unsafe_allow_html=True)
 
             new_username = st.text_input("Username", key="register_username", placeholder="Choose a username", label_visibility="collapsed")
-            st.markdown("<div style='height: 0.4rem;'></div>", unsafe_allow_html=True)
+            st.markdown("<div class='auth-spacer-sm'></div>", unsafe_allow_html=True)
 
             email = st.text_input("Email", key="register_email", placeholder="Enter your email", label_visibility="collapsed")
-            st.markdown("<div style='height: 0.4rem;'></div>", unsafe_allow_html=True)
+            st.markdown("<div class='auth-spacer-sm'></div>", unsafe_allow_html=True)
 
             new_password = st.text_input("Password", type="password", key="register_password", placeholder="Create a password (min. 6 characters)", label_visibility="collapsed")
-            st.markdown("<div style='height: 0.4rem;'></div>", unsafe_allow_html=True)
+            st.markdown("<div class='auth-spacer-sm'></div>", unsafe_allow_html=True)
 
             confirm_password = st.text_input("Confirm Password", type="password", key="confirm_password", placeholder="Confirm your password", label_visibility="collapsed")
-            st.markdown("<div style='height: 0.75rem;'></div>", unsafe_allow_html=True)
+            st.markdown("<div class='auth-spacer-md'></div>", unsafe_allow_html=True)
 
             if st.button("Create Account", key="register_btn", use_container_width=True, type="primary"):
                 normalized_username = new_username.strip()
